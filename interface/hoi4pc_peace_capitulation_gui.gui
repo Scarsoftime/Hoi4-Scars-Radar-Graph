@@ -1,0 +1,20 @@
+guitypes = {
+	containerWindowType = {
+		name = "hoi4_radar_graph"
+		size = { width = 300 height = 412 }
+		position = { x = -150 y = -200 }
+		orientation = center
+		moveable = yes
+		
+		background = {
+			name = "Background"	
+			quadTextureSprite ="GFX_tiled_paper_bg"
+		}
+
+		iconType = {
+			name = "radar_graph"
+			position = { x = 25 y = 50 }
+			spriteType = "GFX_hoi4_radar_graph"
+		}
+	}
+}

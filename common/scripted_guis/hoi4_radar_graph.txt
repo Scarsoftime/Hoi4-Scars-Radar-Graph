@@ -1,0 +1,6 @@
+scripted_gui = {
+	hoi4_radar_graph = {
+		context_type = player_context
+		window_name = hoi4_radar_graph
+	}
+}

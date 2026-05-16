@@ -1,0 +1,8 @@
+spritetypes = {
+	spriteType = {
+		name = "GFX_hoi4_radar_graph"
+		texturefile = "gfx/interface/radar_graph/filled.png"
+		masking_texture = "gfx/interface/radar_graph/empty.png"
+		effectFile = "gfx/FX/radar_graph.shader"
+	}
+}
