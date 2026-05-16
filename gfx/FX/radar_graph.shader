@@ -1,3 +1,13 @@
+# Radar graph (5-axis) by Scars
+# Description
+# This shader implements a programmable radar graph chart with 5 axis
+# Input format :
+#      Fields |   Axis 5     |    Axis 4     |     Axis 3    |    Axis 2  |    Axis 1   |
+#        Bits |  29  |   24  |   23  |   18  |   17  |   12  |  11  |  6  |  5  |   0   |
+
+# textureFile is the filled color
+# masking_texture is the empty color
+
 Includes = {
 	"buttonstate.fxh"
 	"sprite_animation.fxh"
@@ -80,7 +90,7 @@ PixelShader =
 			};
 
 			float scale[5] = {
-				1.0, 0.5, 1.0, 1.0, 1.0
+				0.3, 0.8, 0.9, 0.9, 0.3
 			};
 
 			float2 coords[5] = {
@@ -90,42 +100,27 @@ PixelShader =
 				float2(scale[3]*sin(angles[3]),scale[3]*cos(angles[3])),
 				float2(scale[4]*sin(angles[4]),scale[4]*cos(angles[4])),
 			};
-			
-			// line function
-			float line_m[5] = {
-				(coords[1].y-coords[0].y) / (coords[1].x-coords[0].x),
-				(coords[2].y-coords[1].y) / (coords[2].x-coords[1].x),
-				(coords[3].y-coords[2].y) / (coords[3].x-coords[2].x),
-				(coords[4].y-coords[3].y) / (coords[4].x-coords[3].x),
-				(coords[0].y-coords[4].y) / (coords[0].x-coords[4].x)
-			};
-			float line_b[5] = {
-				coords[0].y-line_m[0]*coords[0].x,
-				coords[1].y-line_m[1]*coords[1].x,
-				coords[2].y-line_m[2]*coords[2].x,
-				coords[3].y-line_m[3]*coords[3].x,
-				coords[4].y-line_m[4]*coords[4].x
-			};
 
-			// function itself
-			float line_f[5] = {
-				line_m[0]*x + line_b[0],
-				line_m[1]*x + line_b[1],
-				line_m[2]*x + line_b[2],
-				line_m[3]*x + line_b[3],
-				line_m[4]*x + line_b[4]
-			};
-
-			// checks if region is inside the polygon by checking how many times it has crossed the boundaries
+			// Loops through every boundary line to check if a pixel is inside the polygon
+			// uses bool insidePoly which acts as a counter for how many boundary lines are there to the right of a certain y-level
+			// 0 intersections to the right: not inside (false)
+			// 1 intersections to the right: is inside  (true)
+			// 2 intersections to the right: not inside (false)
 			bool insidePoly = false;
 			for (int i = 0; i < 5; i++) {
 				int j = (i + 1) % 5;
-				float2 a = coords[i];
-				float2 b = coords[j];
+				float2 point_a = coords[i];
+				float2 point_b = coords[j];
 
-				bool straddles = (a.y > y) != (b.y > y);
-				float intersectX = (b.x - a.x) * (y - a.y) / (b.y - a.y) + a.x;
-				if (straddles && x < intersectX) {
+				// either point a or point b is above the current y level and the other is below, meaning this y-level must cross the line between those two points somewhere
+				bool hasCrossing = (point_a.y > y) != (point_b.y > y);
+
+				// find the x-coordinate where the y-line crosses the line between our two points
+				float x_intersection = (point_b.x - point_a.x) * (y - point_a.y) / (point_b.y - point_a.y) + point_a.x;
+
+				// skips check if there is no intersection with a boundary at this y-level
+				// if the current x value is less than the intersection (current pixel is to the left of a boundary line), flip the boolean
+				if ( hasCrossing && x < x_intersection ) {
 					insidePoly = !insidePoly;
 				}
 			}
