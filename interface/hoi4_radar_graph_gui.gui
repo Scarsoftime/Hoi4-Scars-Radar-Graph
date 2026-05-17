@@ -12,9 +12,35 @@ guitypes = {
 		}
 
 		iconType = {
-			name = "radar_graph"
+			name = "radar_graph_5axis"
 			position = { x = 25 y = 50 }
-			spriteType = "GFX_hoi4_radar_graph"
+			spriteType = "GFX_hoi4_radar_graph_5axis"
+		}
+
+		iconType = {
+			name = "radar_graph_5axis_anim_1"
+			position = { x = 25 y = 50 }
+			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
+		}
+		iconType = {
+			name = "radar_graph_5axis_anim_2"
+			position = { x = 25 y = 50 }
+			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
+		}
+		iconType = {
+			name = "radar_graph_5axis_anim_3"
+			position = { x = 25 y = 50 }
+			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
+		}
+		iconType = {
+			name = "radar_graph_5axis_anim_4"
+			position = { x = 25 y = 50 }
+			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
+		}
+		iconType = {
+			name = "radar_graph_5axis_anim_5"
+			position = { x = 25 y = 50 }
+			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
 		}
 	}
 }
