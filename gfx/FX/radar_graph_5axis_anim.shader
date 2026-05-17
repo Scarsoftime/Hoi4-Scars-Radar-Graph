@@ -2,8 +2,8 @@
 # Description
 # This shader implements a programmable radar graph chart with 5 axis
 # Input format :
-#      Fields |   Axis 5     |    Axis 4     |     Axis 3    |    Axis 2  |    Sector   |
-#        Bits |  22  |   18  |   17  |   13  |   12  |   8  |  7  |  3  |  2  |   0   |
+#      Fields | Output Axis of Sector 2  | Output Axis of Sector 1  | Input Axis of Sector 2  | Input Axis of Sector 1 |   Sector    |
+#        Bits |     22      |     18     |     17      |     13     |     12      |     8     |     7      |     3     |  2  |   0   |
 # `textureFile` is a square with the desired area with the filled color
 
 # Instead of one single sprite for the entire radar graph, uses five different elements representing each sector between two axes, and creates an amimation which smoothly interpolates the initial and final states

@@ -13,12 +13,6 @@ calculate_radar_graph_5axis_frame = {
     round_temp_variable = axis_3
     round_temp_variable = axis_4
 
-    log = "axis_0: [?axis_0]"
-    log = "axis_1: [?axis_1]"
-    log = "axis_2: [?axis_2]"
-    log = "axis_3: [?axis_3]"
-    log = "axis_4: [?axis_4]"
-
     set_temp_variable = { radar_graph_5axis_output = axis_0 }
 
     multiply_temp_variable = { axis_1 = 32 } # 2^5 
@@ -32,8 +26,6 @@ calculate_radar_graph_5axis_frame = {
 
     multiply_temp_variable = { axis_4 = 1048576 } # 2^20
     add_to_temp_variable = { radar_graph_5axis_output = axis_4 }
-
-    log = "radar_graph_5axis_output: [?radar_graph_5axis_output]"
 }
 
 maximize_radar_graph_5axis = {
@@ -59,6 +51,7 @@ randomize_radar_graph_5axis = {
 ## Calculates frame data as input
 # input args (temp vars):   axis_0_init, axis_1_init, axis_2_init, axis_3_init, axis_4_init
 #                           axis_0_final, axis_1_final, axis_2_final, axis_3_final, axis_4_final
+# output args (temp vars):  sector_1_frame, sector_2_frame, sector_3_frame, sector_4_frame, sector_5_frame
 calculate_radar_graph_5axis_anim_frame = {
     multiply_temp_variable = { axis_0_init = 24 }
     multiply_temp_variable = { axis_1_init = 24 }
@@ -81,9 +74,9 @@ calculate_radar_graph_5axis_anim_frame = {
     round_temp_variable = axis_3_final
     round_temp_variable = axis_4_final
     
-    ###========
-    ## Sector 1
-    ###========
+    ###========###
+    ## Sector 1 ##
+    ###========###
     set_temp_variable = { sector_1_frame = 1 }
     
     # Initial position
@@ -103,9 +96,9 @@ calculate_radar_graph_5axis_anim_frame = {
     add_to_temp_variable = { sector_1_frame = sector_1_scale_2 }
     add_to_temp_variable = { sector_1_frame = sector_1_scale_3 }
     
-    ###========
-    ## Sector 2
-    ###========
+    ###========###
+    ## Sector 2 ##
+    ###========###
     set_temp_variable = { sector_2_frame = 2 }
     
     # Initial position
@@ -125,9 +118,9 @@ calculate_radar_graph_5axis_anim_frame = {
     add_to_temp_variable = { sector_2_frame = sector_2_scale_2 }
     add_to_temp_variable = { sector_2_frame = sector_2_scale_3 }
     
-    ###========
-    ## Sector 3
-    ###========
+    ###========###
+    ## Sector 3 ##
+    ###========###
     set_temp_variable = { sector_3_frame = 3 }
     
     # Initial position
@@ -147,9 +140,9 @@ calculate_radar_graph_5axis_anim_frame = {
     add_to_temp_variable = { sector_3_frame = sector_3_scale_2 }
     add_to_temp_variable = { sector_3_frame = sector_3_scale_3 }
     
-    ###========
-    ## Sector 4
-    ###========
+    ###========###
+    ## Sector 4 ##
+    ###========###
     set_temp_variable = { sector_4_frame = 4 }
     
     # Initial position
@@ -169,9 +162,9 @@ calculate_radar_graph_5axis_anim_frame = {
     add_to_temp_variable = { sector_4_frame = sector_4_scale_2 }
     add_to_temp_variable = { sector_4_frame = sector_4_scale_3 }
     
-    ###========
-    ## Sector 5
-    ###========
+    ###========###
+    ## Sector 5 ##
+    ###========###
     set_temp_variable = { sector_5_frame = 5 }
     
     # Initial position
