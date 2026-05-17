@@ -4,9 +4,11 @@
 # Input format :
 #      Fields |   Axis 5     |    Axis 4     |     Axis 3    |    Axis 2  |    Axis 1   |
 #        Bits |  29  |   24  |   23  |   18  |   17  |   12  |  11  |  6  |  5  |   0   |
+# `textureFile` is a square with the desired area with the filled color
 
-# textureFile is the filled color
-# masking_texture is the empty color
+# Limited to 25 (0-24) discrete levels for each axis due to bit limitation with feeding the data
+# use the `calculate_radar_graph_frame` scripted effect by feeding in a temp variable 0-1 decimal for each axis_{i}, i=0,1,..,4
+# use the output `radar_graph_output` to feed frame data into the element
 
 Includes = {
 	"buttonstate.fxh"
@@ -44,9 +46,6 @@ VertexStruct VS_OUTPUT
 {
 	float4  vPosition : PDX_POSITION;
 	float2  vTexCoord : TEXCOORD0;
-@ifdef MASKING
-	float2  vMaskingTexCoord : TEXCOORD2;
-@endif
 };
 
 
@@ -89,8 +88,15 @@ PixelShader =
 				2*pi*4/5
 			};
 
+			int data = Offset.x + 1;
+			// int data = 21026893;
+
 			float scale[5] = {
-				0.3, 0.8, 0.9, 0.9, 0.3
+				float((data >> 0) & 0x1F) / 24.0,
+				float((data >> 5) & 0x1F) / 24.0,
+				float((data >> 10) & 0x1F) / 24.0,
+				float((data >> 15) & 0x1F) / 24.0,
+				float((data >> 20) & 0x1F) / 24.0
 			};
 
 			float2 coords[5] = {
@@ -108,9 +114,8 @@ PixelShader =
 			// 2 intersections to the right: not inside (false)
 			bool insidePoly = false;
 			for (int i = 0; i < 5; i++) {
-				int j = (i + 1) % 5;
 				float2 point_a = coords[i];
-				float2 point_b = coords[j];
+				float2 point_b = coords[(i+1)%5];
 
 				// either point a or point b is above the current y level and the other is below, meaning this y-level must cross the line between those two points somewhere
 				bool hasCrossing = (point_a.y > y) != (point_b.y > y);
@@ -128,7 +133,7 @@ PixelShader =
 			if (insidePoly) {
 				return FilledColor;
 			}
-			return EmptyColor;
+			return float4(0.0, 0.0, 0.0, 0.0);
 		}
 	]]
 

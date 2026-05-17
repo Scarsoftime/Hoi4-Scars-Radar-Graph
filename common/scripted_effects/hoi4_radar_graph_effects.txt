@@ -1,0 +1,57 @@
+## Calculates frame data as input
+# input args (temp vars):   axis_0, axis_1, axis_2, axis_3, axis_4
+# output args (temp vars):  radar_graph_output
+calculate_radar_graph_5axis_frame = {
+    multiply_temp_variable = { axis_0 = 24 }
+    multiply_temp_variable = { axis_1 = 24 }
+    multiply_temp_variable = { axis_2 = 24 }
+    multiply_temp_variable = { axis_3 = 24 }
+    multiply_temp_variable = { axis_4 = 24 }
+    round_temp_variable = axis_0
+    round_temp_variable = axis_1
+    round_temp_variable = axis_2
+    round_temp_variable = axis_3
+    round_temp_variable = axis_4
+
+    log = "axis_0: [?axis_0]"
+    log = "axis_1: [?axis_1]"
+    log = "axis_2: [?axis_2]"
+    log = "axis_3: [?axis_3]"
+    log = "axis_4: [?axis_4]"
+
+    set_temp_variable = { radar_graph_output = axis_0 }
+
+    multiply_temp_variable = { axis_1 = 32 } # 2^5 
+    add_to_temp_variable = { radar_graph_output = axis_1 }
+
+    multiply_temp_variable = { axis_2 = 1024 } # 2^10
+    add_to_temp_variable = { radar_graph_output = axis_2 }
+
+    multiply_temp_variable = { axis_3 = 32768 } # 2^15
+    add_to_temp_variable = { radar_graph_output = axis_3 }
+
+    multiply_temp_variable = { axis_4 = 1048576 } # 2^20
+    add_to_temp_variable = { radar_graph_output = axis_4 }
+
+    log = "radar_graph_output: [?radar_graph_output]"
+}
+
+maximize_radar_graph_5axis = {
+    set_temp_variable = { axis_0 = 1 }
+    set_temp_variable = { axis_1 = 1 }
+    set_temp_variable = { axis_2 = 1 }
+    set_temp_variable = { axis_3 = 1 }
+    set_temp_variable = { axis_4 = 1 }
+    calculate_radar_graph_frame = yes
+    set_variable = { radar_graph_frame = radar_graph_output }
+}
+
+randomize_radar_graph_5axis = {
+    set_temp_variable_to_random = axis_0
+    set_temp_variable_to_random = axis_1
+    set_temp_variable_to_random = axis_2
+    set_temp_variable_to_random = axis_3
+    set_temp_variable_to_random = axis_4
+    calculate_radar_graph_frame = yes
+    set_variable = { radar_graph_frame = radar_graph_output }
+}

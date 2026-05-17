@@ -2,5 +2,10 @@ scripted_gui = {
 	hoi4_radar_graph = {
 		context_type = player_context
 		window_name = hoi4_radar_graph
+		properties = {
+			radar_graph = {
+				frame = radar_graph_frame
+			}
+		}
 	}
 }
