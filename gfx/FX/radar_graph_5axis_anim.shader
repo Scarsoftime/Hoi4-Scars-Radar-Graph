@@ -130,7 +130,7 @@ PixelShader =
 				float2 point_b = thisSectorCoords[(i+1)%3];
 
 				// either point a or point b is above the current y level and the other is below, meaning this y-level must cross the line between those two points somewhere
-				bool hasCrossing = (point_a.y > y) != (point_b.y > y);
+				bool hasCrossing = (point_a.y > y) ^^ (point_b.y > y);
 
 				// find the x-coordinate where the y-line crosses the line between our two points
 				float x_intersection = (point_b.x - point_a.x) * (y - point_a.y) / (point_b.y - point_a.y) + point_a.x;
@@ -141,7 +141,11 @@ PixelShader =
 					insidePoly = !insidePoly;
 				}
 			}
-			return lerp(EmptyColor, FilledColor, int(insidePoly));
+
+			if(insidePoly){
+				return FilledColor;
+			}
+			return EmptyColor;
 		}
 	]]
 }
