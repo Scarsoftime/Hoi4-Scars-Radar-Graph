@@ -82,24 +82,6 @@ PixelShader =
 
 			float pi = 3.141592654;
 
-			#ifdef PDX_DIRECTX_9
-				float angles[5] = {
-					2*pi*0/5,
-					2*pi*1/5,
-					2*pi*2/5,
-					2*pi*3/5,
-					2*pi*4/5
-				};
-			#endif
-			#ifdef PDX_DIRECTX_11
-				float angles[5] = {
-					2*pi*0/5,
-					2*pi*1/5,
-					2*pi*2/5,
-					2*pi*3/5,
-					2*pi*4/5
-				};
-			#endif
 			#ifdef PDX_OPENGL
 				float angles[5] = float[5](
 					2*pi*0/5,
@@ -108,79 +90,51 @@ PixelShader =
 					2*pi*3/5,
 					2*pi*4/5
 				);
+			#else
+				float angles[5] = {
+					2*pi*0/5,
+					2*pi*1/5,
+					2*pi*2/5,
+					2*pi*3/5,
+					2*pi*4/5
+				};
 			#endif
 
 			float vTimeClamped = sin(clamp(1.5*(Time-AnimationTime),0,pi/2));
 			int data = int(Offset.x) + 1;
 
-			#ifdef PDX_DIRECTX_9
-				int thisSector = (data >> 0) & 0x7;
-			#endif
-			#ifdef PDX_DIRECTX_11
-				int thisSector = (data >> 0) & 0x7;
-			#endif
 			#ifdef PDX_OPENGL
 				float thisSector = mod(data, 8.0);
+			#else
+				int thisSector = (data >> 0) & 0x7;
 			#endif
 
-			#ifdef PDX_DIRECTX_9
-				float scale_init[2] = {
-					float((data >> 3) & 0x1F) / 25.0,
-					float((data >> 8) & 0x1F) / 25.0
-				};
-			#endif
-			#ifdef PDX_DIRECTX_11
-				float scale_init[2] = {
-					float((data >> 3) & 0x1F) / 25.0,
-					float((data >> 8) & 0x1F) / 25.0
-				};
-			#endif
 			#ifdef PDX_OPENGL
 				float scale_init[2] = float[2](
 					float(mod(float(data) / 8.0, 32.0)) / 25.0,
 					float(mod(float(data) / 256.0, 32.0)) / 25.0
 				);
+			#else
+				float scale_init[2] = {
+					float((data >> 3) & 0x1F) / 25.0,
+					float((data >> 8) & 0x1F) / 25.0
+				};
 			#endif
 
-			#ifdef PDX_DIRECTX_9
-				float scale_final[2] = {
-					float((data >> 13) & 0x1F) / 25.0,
-					float((data >> 18) & 0x1F) / 25.0
-				};
-			#endif
-			#ifdef PDX_DIRECTX_11
-				float scale_final[2] = {
-					float((data >> 13) & 0x1F) / 25.0,
-					float((data >> 18) & 0x1F) / 25.0
-				};
-			#endif
 			#ifdef PDX_OPENGL
 				float scale_final[2] = float[2](
 					float(mod(float(data) / 8192.0, 32.0)) / 25.0,
 					float(mod(float(data) / 262144.0, 32.0)) / 25.0
 				);
+			#else
+				float scale_final[2] = {
+					float((data >> 13) & 0x1F) / 25.0,
+					float((data >> 18) & 0x1F) / 25.0
+				};
 			#endif
 
 			float2 origin = float2(0.0, 0.0);
 
-			#ifdef PDX_DIRECTX_9
-				float2 coords_flat[5] = {
-					float2(sin(angles[0]),cos(angles[0])),
-					float2(sin(angles[1]),cos(angles[1])),
-					float2(sin(angles[2]),cos(angles[2])),
-					float2(sin(angles[3]),cos(angles[3])),
-					float2(sin(angles[4]),cos(angles[4]))
-				};
-			#endif
-			#ifdef PDX_DIRECTX_11
-				float2 coords_flat[5] = {
-					float2(sin(angles[0]),cos(angles[0])),
-					float2(sin(angles[1]),cos(angles[1])),
-					float2(sin(angles[2]),cos(angles[2])),
-					float2(sin(angles[3]),cos(angles[3])),
-					float2(sin(angles[4]),cos(angles[4]))
-				};
-			#endif
 			#ifdef PDX_OPENGL
 				float2 coords_flat[5] = float2[5](
 					float2(sin(angles[0]),cos(angles[0])),
@@ -189,28 +143,28 @@ PixelShader =
 					float2(sin(angles[3]),cos(angles[3])),
 					float2(sin(angles[4]),cos(angles[4]))
 				);
+			#else
+				float2 coords_flat[5] = {
+					float2(sin(angles[0]),cos(angles[0])),
+					float2(sin(angles[1]),cos(angles[1])),
+					float2(sin(angles[2]),cos(angles[2])),
+					float2(sin(angles[3]),cos(angles[3])),
+					float2(sin(angles[4]),cos(angles[4]))
+				};
 			#endif
 
-			#ifdef PDX_DIRECTX_9
-				float2 thisSectorCoords[3] = {
-					origin,
-					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
-					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
-				};
-			#endif
-			#ifdef PDX_DIRECTX_11
-				float2 thisSectorCoords[3] = {
-					origin,
-					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
-					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
-				};
-			#endif
 			#ifdef PDX_OPENGL
 				float2 thisSectorCoords[3] = float2[3](
 					origin,
 					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[int(thisSector-1)],
 					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[int(mod(thisSector,5.0))]
 				);
+			#else
+				float2 thisSectorCoords[3] = {
+					origin,
+					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
+					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
+				};
 			#endif
 
 			// Loops through every boundary line to check if a pixel is inside the polygon
@@ -222,14 +176,10 @@ PixelShader =
 			for (int i = 0; i < 3; i++) {
 				float2 point_a = thisSectorCoords[i];
 
-				#ifdef PDX_DIRECTX_11
-				float2 point_b = thisSectorCoords[(i+1)%3];
-				#endif
-				#ifdef PDX_DIRECTX_9
-				float2 point_b = thisSectorCoords[(i+1)%3];
-				#endif
 				#ifdef PDX_OPENGL
-				float2 point_b = thisSectorCoords[int(mod(i+1,3.0))];
+					float2 point_b = thisSectorCoords[int(mod(i+1,3.0))];
+				#else
+					float2 point_b = thisSectorCoords[(i+1)%3];
 				#endif
 
 				// either point a or point b is above the current y level and the other is below, meaning this y-level must cross the line between those two points somewhere
