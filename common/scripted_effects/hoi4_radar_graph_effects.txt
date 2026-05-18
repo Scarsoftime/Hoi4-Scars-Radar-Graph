@@ -1,248 +1,167 @@
+#=====================================#
+## Core
+
 ## Calculates frame data as input
-# input args (0-1 temp vars):   axis_0, axis_1, axis_2, axis_3, axis_4
-# output args (temp var):       radar_graph_5axis_output
+# input args (0-1 temp array):  axis^0, axis^1, axis^2, axis^3, axis^4
+# output arg (temp var):        radar_graph_5axis_output
 calculate_radar_graph_5axis_frame = {
-    multiply_temp_variable = { axis_0 = 24 }
-    multiply_temp_variable = { axis_1 = 24 }
-    multiply_temp_variable = { axis_2 = 24 }
-    multiply_temp_variable = { axis_3 = 24 }
-    multiply_temp_variable = { axis_4 = 24 }
-    round_temp_variable = axis_0
-    round_temp_variable = axis_1
-    round_temp_variable = axis_2
-    round_temp_variable = axis_3
-    round_temp_variable = axis_4
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		multiply_temp_variable = { axis^v = 24 }
+		round_temp_variable = axis^v
+	}
 
-    set_temp_variable = { radar_graph_5axis_output = axis_0 }
+	set_temp_variable = { radar_graph_5axis_output = axis^0 }
 
-    multiply_temp_variable = { axis_1 = 32 } # 2^5 
-    add_to_temp_variable = { radar_graph_5axis_output = axis_1 }
+	multiply_temp_variable = { axis^1 = 32 } # 2^5 
+	add_to_temp_variable = { radar_graph_5axis_output = axis^1 }
 
-    multiply_temp_variable = { axis_2 = 1024 } # 2^10
-    add_to_temp_variable = { radar_graph_5axis_output = axis_2 }
+	multiply_temp_variable = { axis^2 = 1024 } # 2^10
+	add_to_temp_variable = { radar_graph_5axis_output = axis^2 }
 
-    multiply_temp_variable = { axis_3 = 32768 } # 2^15
-    add_to_temp_variable = { radar_graph_5axis_output = axis_3 }
+	multiply_temp_variable = { axis^3 = 32768 } # 2^15
+	add_to_temp_variable = { radar_graph_5axis_output = axis^3 }
 
-    multiply_temp_variable = { axis_4 = 1048576 } # 2^20
-    add_to_temp_variable = { radar_graph_5axis_output = axis_4 }
+	multiply_temp_variable = { axis^4 = 1048576 } # 2^20
+	add_to_temp_variable = { radar_graph_5axis_output = axis^4 }
 }
 
+## Calculates frame data as input
+# input args (temp array):   axis_init^0, axis_init^1, axis_init^2, axis_init^3, axis_init^4
+#                            axis_final^0, axis_final^1, axis_final^2, axis_final^3, axis_final^4
+# output args (temp array):  sector_frame^0, sector_frame^1, sector_frame^2, sector_frame^3, sector_frame^4
+calculate_radar_graph_5axis_anim_frame = {
+	for_each_loop = {
+		array = axis_init
+		multiply_temp_variable = { axis_init^i = 24 }
+		round_temp_variable = axis_init^i
+	}
+	for_each_loop = {
+		array = axis_final
+		multiply_temp_variable = { axis_final^i = 24 }
+		round_temp_variable = axis_final^i
+	}
+	
+	for_loop_effect = {
+		# 1-5
+		start = 1 end = 6 value = v
+
+		add_to_temp_array = { sector_frame = v }
+
+		set_temp_variable = { temp_second_axis = v }
+		modulo_temp_variable = { temp_second_axis = 5 }
+		set_temp_variable = { temp_first_axis = v }
+		subtract_from_temp_variable = { temp_first_axis = 1 }
+
+		# Initial position
+		set_temp_variable = { sector_scale_0 = axis_init^temp_first_axis }
+		multiply_temp_variable = { sector_scale_0 = 8 } # 2^3
+		set_temp_variable = { sector_scale_1 = axis_init^temp_second_axis }
+		multiply_temp_variable = { sector_scale_1 = 256 } # 2^8
+
+		# Final position
+		set_temp_variable = { sector_scale_2 = axis_final^temp_first_axis }
+		multiply_temp_variable = { sector_scale_2 = 8192 } # 2^13
+		set_temp_variable = { sector_scale_3 = axis_final^temp_second_axis }
+		multiply_temp_variable = { sector_scale_3 = 262144 } # 2^18
+
+		set_temp_variable = { current_index = v }
+		subtract_from_temp_variable = { current_index = 1 }
+
+		add_to_temp_variable = { sector_frame^current_index = sector_scale_0 }
+		add_to_temp_variable = { sector_frame^current_index = sector_scale_1 }
+		add_to_temp_variable = { sector_frame^current_index = sector_scale_2 }
+		add_to_temp_variable = { sector_frame^current_index = sector_scale_3 }
+	}
+
+	if = {
+		limit = {
+			has_country_flag = radar_graph_5axis_anim_toggle
+		}
+		clr_country_flag = radar_graph_5axis_anim_toggle
+	}
+	else = {
+		set_country_flag = radar_graph_5axis_anim_toggle
+	}
+}
+
+## Core
+#=====================================#
+## Implementaion
+
+## 5-axis
 maximize_radar_graph_5axis = {
-    set_temp_variable = { axis_0 = 1 }
-    set_temp_variable = { axis_1 = 1 }
-    set_temp_variable = { axis_2 = 1 }
-    set_temp_variable = { axis_3 = 1 }
-    set_temp_variable = { axis_4 = 1 }
-    calculate_radar_graph_5axis_frame = yes
-    set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis = 1 }
+	}
+	calculate_radar_graph_5axis_frame = yes
+	set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
 }
 
 randomize_radar_graph_5axis = {
-    set_temp_variable_to_random = { var = axis_0 max = 1 }
-    set_temp_variable_to_random = { var = axis_1 max = 1 }
-    set_temp_variable_to_random = { var = axis_2 max = 1 }
-    set_temp_variable_to_random = { var = axis_3 max = 1 }
-    set_temp_variable_to_random = { var = axis_4 max = 1 }
-    calculate_radar_graph_5axis_frame = yes
-    set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis = 1 }
+		set_temp_variable_to_random = { var = axis^v max = 1 }
+	}
+	calculate_radar_graph_5axis_frame = yes
+	set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
 }
 
-## Calculates frame data as input
-# input args (temp vars):   axis_0_init, axis_1_init, axis_2_init, axis_3_init, axis_4_init
-#                           axis_0_final, axis_1_final, axis_2_final, axis_3_final, axis_4_final
-# output args (temp vars):  sector_1_frame, sector_2_frame, sector_3_frame, sector_4_frame, sector_5_frame
-calculate_radar_graph_5axis_anim_frame = {
-    multiply_temp_variable = { axis_0_init = 24 }
-    multiply_temp_variable = { axis_1_init = 24 }
-    multiply_temp_variable = { axis_2_init = 24 }
-    multiply_temp_variable = { axis_3_init = 24 }
-    multiply_temp_variable = { axis_4_init = 24 }
-    round_temp_variable = axis_0_init
-    round_temp_variable = axis_1_init
-    round_temp_variable = axis_2_init
-    round_temp_variable = axis_3_init
-    round_temp_variable = axis_4_init
-    multiply_temp_variable = { axis_0_final = 24 }
-    multiply_temp_variable = { axis_1_final = 24 }
-    multiply_temp_variable = { axis_2_final = 24 }
-    multiply_temp_variable = { axis_3_final = 24 }
-    multiply_temp_variable = { axis_4_final = 24 }
-    round_temp_variable = axis_0_final
-    round_temp_variable = axis_1_final
-    round_temp_variable = axis_2_final
-    round_temp_variable = axis_3_final
-    round_temp_variable = axis_4_final
-    
-    ###========###
-    ## Sector 1 ##
-    ###========###
-    set_temp_variable = { sector_1_frame = 1 }
-    
-    # Initial position
-    set_temp_variable = { sector_1_scale_0 = axis_0_init }
-    multiply_temp_variable = { sector_1_scale_0 = 8 } # 2^3
-    set_temp_variable = { sector_1_scale_1 = axis_1_init }
-    multiply_temp_variable = { sector_1_scale_1 = 256 } # 2^8
-
-    # Final position
-    set_temp_variable = { sector_1_scale_2 = axis_0_final }
-    multiply_temp_variable = { sector_1_scale_2 = 8192 } # 2^13
-    set_temp_variable = { sector_1_scale_3 = axis_1_final }
-    multiply_temp_variable = { sector_1_scale_3 = 262144 } # 2^18
-
-    add_to_temp_variable = { sector_1_frame = sector_1_scale_0 }
-    add_to_temp_variable = { sector_1_frame = sector_1_scale_1 }
-    add_to_temp_variable = { sector_1_frame = sector_1_scale_2 }
-    add_to_temp_variable = { sector_1_frame = sector_1_scale_3 }
-    
-    ###========###
-    ## Sector 2 ##
-    ###========###
-    set_temp_variable = { sector_2_frame = 2 }
-    
-    # Initial position
-    set_temp_variable = { sector_2_scale_0 = axis_1_init }
-    multiply_temp_variable = { sector_2_scale_0 = 8 } # 2^3
-    set_temp_variable = { sector_2_scale_1 = axis_2_init }
-    multiply_temp_variable = { sector_2_scale_1 = 256 } # 2^8
-
-    # Final position
-    set_temp_variable = { sector_2_scale_2 = axis_1_final }
-    multiply_temp_variable = { sector_2_scale_2 = 8192 } # 2^13
-    set_temp_variable = { sector_2_scale_3 = axis_2_final }
-    multiply_temp_variable = { sector_2_scale_3 = 262144 } # 2^18
-
-    add_to_temp_variable = { sector_2_frame = sector_2_scale_0 }
-    add_to_temp_variable = { sector_2_frame = sector_2_scale_1 }
-    add_to_temp_variable = { sector_2_frame = sector_2_scale_2 }
-    add_to_temp_variable = { sector_2_frame = sector_2_scale_3 }
-    
-    ###========###
-    ## Sector 3 ##
-    ###========###
-    set_temp_variable = { sector_3_frame = 3 }
-    
-    # Initial position
-    set_temp_variable = { sector_3_scale_0 = axis_2_init }
-    multiply_temp_variable = { sector_3_scale_0 = 8 } # 2^3
-    set_temp_variable = { sector_3_scale_1 = axis_3_init }
-    multiply_temp_variable = { sector_3_scale_1 = 256 } # 2^8
-
-    # Final position
-    set_temp_variable = { sector_3_scale_2 = axis_2_final }
-    multiply_temp_variable = { sector_3_scale_2 = 8192 } # 2^13
-    set_temp_variable = { sector_3_scale_3 = axis_3_final }
-    multiply_temp_variable = { sector_3_scale_3 = 262144 } # 2^18
-
-    add_to_temp_variable = { sector_3_frame = sector_3_scale_0 }
-    add_to_temp_variable = { sector_3_frame = sector_3_scale_1 }
-    add_to_temp_variable = { sector_3_frame = sector_3_scale_2 }
-    add_to_temp_variable = { sector_3_frame = sector_3_scale_3 }
-    
-    ###========###
-    ## Sector 4 ##
-    ###========###
-    set_temp_variable = { sector_4_frame = 4 }
-    
-    # Initial position
-    set_temp_variable = { sector_4_scale_0 = axis_3_init }
-    multiply_temp_variable = { sector_4_scale_0 = 8 } # 2^3
-    set_temp_variable = { sector_4_scale_1 = axis_4_init }
-    multiply_temp_variable = { sector_4_scale_1 = 256 } # 2^8
-
-    # Final position
-    set_temp_variable = { sector_4_scale_2 = axis_3_final }
-    multiply_temp_variable = { sector_4_scale_2 = 8192 } # 2^13
-    set_temp_variable = { sector_4_scale_3 = axis_4_final }
-    multiply_temp_variable = { sector_4_scale_3 = 262144 } # 2^18
-
-    add_to_temp_variable = { sector_4_frame = sector_4_scale_0 }
-    add_to_temp_variable = { sector_4_frame = sector_4_scale_1 }
-    add_to_temp_variable = { sector_4_frame = sector_4_scale_2 }
-    add_to_temp_variable = { sector_4_frame = sector_4_scale_3 }
-    
-    ###========###
-    ## Sector 5 ##
-    ###========###
-    set_temp_variable = { sector_5_frame = 5 }
-    
-    # Initial position
-    set_temp_variable = { sector_5_scale_0 = axis_4_init }
-    multiply_temp_variable = { sector_5_scale_0 = 8 } # 2^3
-    set_temp_variable = { sector_5_scale_1 = axis_0_init }
-    multiply_temp_variable = { sector_5_scale_1 = 256 } # 2^8
-
-    # Final position
-    set_temp_variable = { sector_5_scale_2 = axis_4_final }
-    multiply_temp_variable = { sector_5_scale_2 = 8192 } # 2^13
-    set_temp_variable = { sector_5_scale_3 = axis_0_final }
-    multiply_temp_variable = { sector_5_scale_3 = 262144 } # 2^18
-
-    add_to_temp_variable = { sector_5_frame = sector_5_scale_0 }
-    add_to_temp_variable = { sector_5_frame = sector_5_scale_1 }
-    add_to_temp_variable = { sector_5_frame = sector_5_scale_2 }
-    add_to_temp_variable = { sector_5_frame = sector_5_scale_3 }
-
-    if = {
-        limit = {
-            has_country_flag = radar_graph_5axis_anim_toggle
-        }
-        clr_country_flag = radar_graph_5axis_anim_toggle
-    }
-    else = {
-        set_country_flag = radar_graph_5axis_anim_toggle
-    }
-}
-
+## 5-axis animated
 maximize_radar_graph_5axis_anim = {
-    set_temp_variable = { axis_0_init = axis_0_current }
-    set_temp_variable = { axis_1_init = axis_1_current }
-    set_temp_variable = { axis_2_init = axis_2_current }
-    set_temp_variable = { axis_3_init = axis_3_current }
-    set_temp_variable = { axis_4_init = axis_4_current }
-    set_variable = { axis_0_current = 1 }
-    set_variable = { axis_1_current = 1 }
-    set_variable = { axis_2_current = 1 }
-    set_variable = { axis_3_current = 1 }
-    set_variable = { axis_4_current = 1 }
-    set_temp_variable = { axis_0_final = axis_0_current }
-    set_temp_variable = { axis_1_final = axis_1_current }
-    set_temp_variable = { axis_2_final = axis_2_current }
-    set_temp_variable = { axis_3_final = axis_3_current }
-    set_temp_variable = { axis_4_final = axis_4_current }
+	## Set the initial positions with the original values
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_init = axis_current^v }
+	}
 
-    calculate_radar_graph_5axis_anim_frame = yes
+	## Set the new values
+	clear_array = axis_current
+	resize_array = { array = axis_current size = 5 value = 1 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_final = axis_current^v }
+	}
 
-    set_variable = { radar_graph_5axis_anim_1_frame = sector_1_frame }
-    set_variable = { radar_graph_5axis_anim_2_frame = sector_2_frame }
-    set_variable = { radar_graph_5axis_anim_3_frame = sector_3_frame }
-    set_variable = { radar_graph_5axis_anim_4_frame = sector_4_frame }
-    set_variable = { radar_graph_5axis_anim_5_frame = sector_5_frame }
+	## Call the scripted effect
+	calculate_radar_graph_5axis_anim_frame = yes
+
+	## Set the frame data to the output of the scripted effect
+	clear_array = radar_graph_5axis_anim_frame
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_array = { radar_graph_5axis_anim_frame = sector_frame^v }
+	}
 }
 
 randomize_radar_graph_5axis_anim = {
-    set_temp_variable = { axis_0_init = axis_0_current }
-    set_temp_variable = { axis_1_init = axis_1_current }
-    set_temp_variable = { axis_2_init = axis_2_current }
-    set_temp_variable = { axis_3_init = axis_3_current }
-    set_temp_variable = { axis_4_init = axis_4_current }
-    set_variable_to_random = { var = axis_0_current max = 1 }
-    set_variable_to_random = { var = axis_1_current max = 1 }
-    set_variable_to_random = { var = axis_2_current max = 1 }
-    set_variable_to_random = { var = axis_3_current max = 1 }
-    set_variable_to_random = { var = axis_4_current max = 1 }
-    set_temp_variable = { axis_0_final = axis_0_current }
-    set_temp_variable = { axis_1_final = axis_1_current }
-    set_temp_variable = { axis_2_final = axis_2_current }
-    set_temp_variable = { axis_3_final = axis_3_current }
-    set_temp_variable = { axis_4_final = axis_4_current }
+	## Set the initial positions with the original values
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_init = axis_current^v }
+	}
 
-    calculate_radar_graph_5axis_anim_frame = yes
+	## Set the new values
+	clear_array = axis_current
+	resize_array = { axis_current = 5 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		set_variable_to_random = { var = axis_current^v max = 1 }
+	}
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_final = axis_current^v }
+	}
 
-    set_variable = { radar_graph_5axis_anim_1_frame = sector_1_frame }
-    set_variable = { radar_graph_5axis_anim_2_frame = sector_2_frame }
-    set_variable = { radar_graph_5axis_anim_3_frame = sector_3_frame }
-    set_variable = { radar_graph_5axis_anim_4_frame = sector_4_frame }
-    set_variable = { radar_graph_5axis_anim_5_frame = sector_5_frame }
+	## Call the scripted effect
+	calculate_radar_graph_5axis_anim_frame = yes
+
+	## Set the frame data to the output of the scripted effect
+	clear_array = radar_graph_5axis_anim_frame
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_array = { radar_graph_5axis_anim_frame = sector_frame^v }
+	}
 }

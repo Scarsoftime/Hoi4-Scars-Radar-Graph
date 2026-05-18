@@ -1,8 +1,8 @@
 guitypes = {
 	containerWindowType = {
 		name = "hoi4_radar_graph"
-		size = { width = 300 height = 412 }
-		position = { x = -150 y = -200 }
+		size = { width = 300 height = 500 }
+		position = { x = -150 y = -250 }
 		orientation = center
 		moveable = yes
 		
@@ -13,33 +13,19 @@ guitypes = {
 
 		iconType = {
 			name = "radar_graph_5axis"
-			position = { x = 25 y = 50 }
+			position = { x = 25 y = 20 }
 			spriteType = "GFX_hoi4_radar_graph_5axis"
 		}
 
-		iconType = {
-			name = "radar_graph_5axis_anim_1"
-			position = { x = 25 y = 50 }
-			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
+		gridboxtype = {
+			name = "radar_graph_5axis_anim_grid"
+			position = { x = 25 y = 250 }
 		}
+	}
+	containerWindowType = {
+		name = "radar_graph_5axis_anim_entry"
 		iconType = {
-			name = "radar_graph_5axis_anim_2"
-			position = { x = 25 y = 50 }
-			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
-		}
-		iconType = {
-			name = "radar_graph_5axis_anim_3"
-			position = { x = 25 y = 50 }
-			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
-		}
-		iconType = {
-			name = "radar_graph_5axis_anim_4"
-			position = { x = 25 y = 50 }
-			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
-		}
-		iconType = {
-			name = "radar_graph_5axis_anim_5"
-			position = { x = 25 y = 50 }
+			name = "radar_graph_5axis_anim"
 			spriteType = "GFX_hoi4_radar_graph_5axis_anim"
 		}
 	}

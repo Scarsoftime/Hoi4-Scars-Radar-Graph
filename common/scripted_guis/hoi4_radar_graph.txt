@@ -2,44 +2,26 @@ scripted_gui = {
 	hoi4_radar_graph = {
 		context_type = player_context
 		window_name = hoi4_radar_graph
+		dynamic_lists = {
+			radar_graph_5axis_anim_grid = {
+				array = radar_graph_5axis_anim_frame
+				entry_container = radar_graph_5axis_anim_entry
+				value = graph_frame
+			}
+		}
 		properties = {
 			radar_graph_5axis = {
 				frame = radar_graph_5axis_frame
 			}
-			radar_graph_5axis_anim_1 = {
-				frame = radar_graph_5axis_anim_1_frame
-			}
-			radar_graph_5axis_anim_2 = {
-				frame = radar_graph_5axis_anim_2_frame
-			}
-			radar_graph_5axis_anim_3 = {
-				frame = radar_graph_5axis_anim_3_frame
-			}
-			radar_graph_5axis_anim_4 = {
-				frame = radar_graph_5axis_anim_4_frame
-			}
-			radar_graph_5axis_anim_5 = {
-				frame = radar_graph_5axis_anim_5_frame
+			radar_graph_5axis_anim = {
+				frame = graph_frame
 			}
 		}
 		triggers = {
-			radar_graph_5axis_visible = {
-				always = no
-			}
-			radar_graph_5axis_anim_1_click_enabled = {
-				has_country_flag = radar_graph_5axis_anim_toggle
-			}
-			radar_graph_5axis_anim_2_click_enabled = {
-				has_country_flag = radar_graph_5axis_anim_toggle
-			}
-			radar_graph_5axis_anim_3_click_enabled = {
-				has_country_flag = radar_graph_5axis_anim_toggle
-			}
-			radar_graph_5axis_anim_4_click_enabled = {
-				has_country_flag = radar_graph_5axis_anim_toggle
-			}
-			radar_graph_5axis_anim_5_click_enabled = {
-				has_country_flag = radar_graph_5axis_anim_toggle
+			radar_graph_5axis_anim_click_enabled = {
+				NOT = {
+					has_country_flag = radar_graph_5axis_anim_toggle
+				}
 			}
 		}
 	}
