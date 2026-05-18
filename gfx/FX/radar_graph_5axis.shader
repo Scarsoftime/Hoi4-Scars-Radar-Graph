@@ -109,7 +109,6 @@ PixelShader =
 			#endif
 
 			int data = int(Offset.x) + 1;
-			// int data = 21026893;
 
 			#ifdef PDX_DIRECTX_9
 				float scale[5] = {
@@ -131,11 +130,11 @@ PixelShader =
 			#endif
 			#ifdef PDX_OPENGL
 				float scale[5] = float[5](
-					float((data >> 0) & 0x1F) / 25.0,
-					float((data >> 5) & 0x1F) / 25.0,
-					float((data >> 10) & 0x1F) / 25.0,
-					float((data >> 15) & 0x1F) / 25.0,
-					float((data >> 20) & 0x1F) / 25.0
+					float(mod(float(data), 32.0)) / 25.0,
+					float(mod(float(data) / 32.0, 32.0)) / 25.0,
+					float(mod(float(data) / 1024.0, 32.0)) / 25.0,
+					float(mod(float(data) / 32768.0, 32.0)) / 25.0,
+					float(mod(float(data) / 1048576.0, 32.0)) / 25.0
 				);
 			#endif
 
@@ -175,7 +174,16 @@ PixelShader =
 			bool insidePoly = false;
 			for (int i = 0; i < 5; i++) {
 				float2 point_a = coords[i];
+
+				#ifdef PDX_DIRECTX_11
 				float2 point_b = coords[(i+1)%5];
+				#endif
+				#ifdef PDX_DIRECTX_9
+				float2 point_b = coords[(i+1)%5];
+				#endif
+				#ifdef PDX_OPENGL
+				float2 point_b = coords[int(mod(i+1,5.0))];
+				#endif
 
 				// either point a or point b is above the current y level and the other is below, meaning this y-level must cross the line between those two points somewhere
 				bool hasCrossing = (point_a.y > y) != (point_b.y > y);
