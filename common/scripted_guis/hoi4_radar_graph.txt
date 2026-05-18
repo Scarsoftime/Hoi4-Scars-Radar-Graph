@@ -24,5 +24,117 @@ scripted_gui = {
 				}
 			}
 		}
+		effects = {
+			maximize_button_click = {
+				maximize_radar_graph_both = yes
+			}
+			randomize_button_click = {
+				randomize_radar_graph_both = yes
+			}
+		}
+		effects = {
+			radar_graph_5axis_0_plus_click = {
+				set_temp_variable = { temp_axis_index = 0 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_1_plus_click = {
+				set_temp_variable = { temp_axis_index = 1 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_2_plus_click = {
+				set_temp_variable = { temp_axis_index = 2 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_3_plus_click = {
+				set_temp_variable = { temp_axis_index = 3 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_4_plus_click = {
+				set_temp_variable = { temp_axis_index = 4 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_0_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 0 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_1_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 1 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_2_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 2 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_3_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 3 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis = yes
+			}
+			radar_graph_5axis_4_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 4 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis = yes
+			}
+		}
+		effects = {
+			radar_graph_5axis_anim_0_plus_click = {
+				set_temp_variable = { temp_axis_index = 0 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_1_plus_click = {
+				set_temp_variable = { temp_axis_index = 1 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_2_plus_click = {
+				set_temp_variable = { temp_axis_index = 2 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_3_plus_click = {
+				set_temp_variable = { temp_axis_index = 3 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_4_plus_click = {
+				set_temp_variable = { temp_axis_index = 4 }
+				set_temp_variable = { temp_change = 0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_0_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 0 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_1_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 1 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_2_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 2 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_3_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 3 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+			radar_graph_5axis_anim_4_plus_right_click = {
+				set_temp_variable = { temp_axis_index = 4 }
+				set_temp_variable = { temp_change = -0.2 }
+				add_radar_graph_5axis_anim = yes
+			}
+		}
 	}
 }

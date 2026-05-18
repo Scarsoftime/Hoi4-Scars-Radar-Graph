@@ -13,19 +13,96 @@ guitypes = {
 
 		containerWindowType = {
 			name = "5axis"
-			position = { x = 40 y = 30 }
+			position = { x = 30 y = 40 }
 			iconType = {
 				name = "radar_graph_5axis"
 				spriteType = "GFX_hoi4_radar_graph_5axis"
 				alwaystransparent = yes
 			}
+			buttonType = {
+				name = "radar_graph_5axis_0_plus"
+				position = { x = 125 y = -15 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_1_plus"
+				position = { x = 245 y = 65 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_2_plus"
+				position = { x = 215 y = 240 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_3_plus"
+				position = { x = 35 y = 240 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_4_plus"
+				position = { x = 5 y = 65 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
 		}
 		containerWindowType = {
 			name = "5axis_anim"
-			position = { x = 310 y = 30 }
+			position = { x = 320 y = 40 }
 			gridboxtype = {
 				name = "radar_graph_5axis_anim_grid"
 			}
+			buttonType = {
+				name = "radar_graph_5axis_anim_0_plus"
+				position = { x = 125 y = -15 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_anim_1_plus"
+				position = { x = 245 y = 65 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_anim_2_plus"
+				position = { x = 215 y = 240 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_anim_3_plus"
+				position = { x = 35 y = 240 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+			buttonType = {
+				name = "radar_graph_5axis_anim_4_plus"
+				position = { x = 5 y = 65 }
+				centerposition = yes
+				spriteType = "GFX_add_one"
+			}
+		}
+
+		buttonType = {
+			name = "maximize_button"
+			position = { x = 240 y = 8 }
+			spriteType = "GFX_diplo_filter_entry"
+			frame = 2
+			buttonText = "Maximize"
+			buttonFont = "hoi_16mbs"
+		}
+		buttonType = {
+			name = "randomize_button"
+			position = { x = 240 y = 42 }
+			spriteType = "GFX_diplo_filter_entry"
+			frame = 2
+			buttonText = "Randomize"
+			buttonFont = "hoi_16mbs"
 		}
 
 	}

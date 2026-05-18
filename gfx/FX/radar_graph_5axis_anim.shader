@@ -100,7 +100,7 @@ PixelShader =
 				};
 			#endif
 
-			float vTimeClamped = sin(clamp(1.5*(Time-AnimationTime),0,pi/2));
+			float vTimeClamped = sin(clamp(2*(Time-AnimationTime),0,pi/2));
 			int data = int(Offset.x) + 1;
 
 			#ifdef PDX_OPENGL
