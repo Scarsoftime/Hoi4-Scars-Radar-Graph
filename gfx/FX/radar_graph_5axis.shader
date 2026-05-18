@@ -6,8 +6,8 @@
 #        Bits |  29  |   24  |   23  |   18  |   17  |   12  |  11  |  6  |  5  |   0   |
 # `textureFile` is a square with the desired area with the filled color
 
-# Limited to 25 (0-24) discrete levels for each axis due to bit limitation with feeding the data
-# use the `calculate_radar_graph_5axis_frame` scripted effect by feeding in a temp variable 0-1 decimal for each axis_{i}, i=0,1,..,4
+# Limited to 26 (0-25) discrete levels for each axis due to bit limitation with feeding the data
+# use the `calculate_radar_graph_5axis_frame` scripted effect by feeding in a temp array 0-1 decimal for each axis^{i}, i=0,1,..,4
 # use the output `radar_graph_5axis_output` to feed frame data into the element
 
 Includes = {
@@ -113,29 +113,29 @@ PixelShader =
 
 			#ifdef PDX_DIRECTX_9
 				float scale[5] = {
-					float((data >> 0) & 0x1F) / 24.0,
-					float((data >> 5) & 0x1F) / 24.0,
-					float((data >> 10) & 0x1F) / 24.0,
-					float((data >> 15) & 0x1F) / 24.0,
-					float((data >> 20) & 0x1F) / 24.0
+					float((data >> 0) & 0x1F) / 25.0,
+					float((data >> 5) & 0x1F) / 25.0,
+					float((data >> 10) & 0x1F) / 25.0,
+					float((data >> 15) & 0x1F) / 25.0,
+					float((data >> 20) & 0x1F) / 25.0
 				};
 			#endif
 			#ifdef PDX_DIRECTX_11
 				float scale[5] = {
-					float((data >> 0) & 0x1F) / 24.0,
-					float((data >> 5) & 0x1F) / 24.0,
-					float((data >> 10) & 0x1F) / 24.0,
-					float((data >> 15) & 0x1F) / 24.0,
-					float((data >> 20) & 0x1F) / 24.0
+					float((data >> 0) & 0x1F) / 25.0,
+					float((data >> 5) & 0x1F) / 25.0,
+					float((data >> 10) & 0x1F) / 25.0,
+					float((data >> 15) & 0x1F) / 25.0,
+					float((data >> 20) & 0x1F) / 25.0
 				};
 			#endif
 			#ifdef PDX_OPENGL
 				float scale[5] = float[5](
-					float((data >> 0) & 0x1F) / 24.0,
-					float((data >> 5) & 0x1F) / 24.0,
-					float((data >> 10) & 0x1F) / 24.0,
-					float((data >> 15) & 0x1F) / 24.0,
-					float((data >> 20) & 0x1F) / 24.0
+					float((data >> 0) & 0x1F) / 25.0,
+					float((data >> 5) & 0x1F) / 25.0,
+					float((data >> 10) & 0x1F) / 25.0,
+					float((data >> 15) & 0x1F) / 25.0,
+					float((data >> 20) & 0x1F) / 25.0
 				);
 			#endif
 

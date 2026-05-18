@@ -7,9 +7,10 @@
 # `textureFile` is a square with the desired area with the filled color
 
 # Instead of one single sprite for the entire radar graph, uses five different elements representing each sector between two axes, and creates an amimation which smoothly interpolates the initial and final states
-# Limited to 25 (0-24) discrete levels for each axis due to bit limitation with feeding the data
-# use the `calculate_radar_graph_5axis_anim_frame` scripted effect by feeding in a temp variable 0-1 decimal for each axis_{i}_init and axis_{i}_final, i=0,1,..,4
-# use the output `sector_{k}_frame`, k=1,2,...,5 to feed frame data into every element
+# Limited to 26 (0-25) discrete levels for each axis due to bit limitation with feeding the data
+# use the `calculate_radar_graph_5axis_anim_frame` scripted effect by feeding in a temp array 0-1 decimal for each axis_init^{i} and axis_final^{i}, i=0,1,..,4
+# use the output `sector_frame^{k}`, k=1,2,...,5 to feed frame data into every element. Gridbox use recommended.
+# animation uses a fliping country flag in an `<element>_click_enabled` trigger to re-trigger the animation after every change of value
 
 Includes = {
 	"buttonstate.fxh"
@@ -116,39 +117,39 @@ PixelShader =
 
 			#ifdef PDX_DIRECTX_9
 				float scale_init[2] = {
-					float((data >> 3) & 0x1F) / 24,
-					float((data >> 8) & 0x1F) / 24
+					float((data >> 3) & 0x1F) / 25,
+					float((data >> 8) & 0x1F) / 25
 				};
 			#endif
 			#ifdef PDX_DIRECTX_11
 				float scale_init[2] = {
-					float((data >> 3) & 0x1F) / 24,
-					float((data >> 8) & 0x1F) / 24
+					float((data >> 3) & 0x1F) / 25,
+					float((data >> 8) & 0x1F) / 25
 				};
 			#endif
 			#ifdef PDX_OPENGL
 				float scale_init[2] = float[2](
-					float((data >> 3) & 0x1F) / 24,
-					float((data >> 8) & 0x1F) / 24
+					float((data >> 3) & 0x1F) / 25,
+					float((data >> 8) & 0x1F) / 25
 				);
 			#endif
 
 			#ifdef PDX_DIRECTX_9
 				float scale_final[2] = {
-					float((data >> 13) & 0x1F) / 24,
-					float((data >> 18) & 0x1F) / 24	
+					float((data >> 13) & 0x1F) / 25,
+					float((data >> 18) & 0x1F) / 25	
 				};
 			#endif
 			#ifdef PDX_DIRECTX_11
 				float scale_final[2] = {
-					float((data >> 13) & 0x1F) / 24,
-					float((data >> 18) & 0x1F) / 24	
+					float((data >> 13) & 0x1F) / 25,
+					float((data >> 18) & 0x1F) / 25	
 				};
 			#endif
 			#ifdef PDX_OPENGL
 				float scale_final[2] = float[2](
-					float((data >> 13) & 0x1F) / 24,
-					float((data >> 18) & 0x1F) / 24	
+					float((data >> 13) & 0x1F) / 25,
+					float((data >> 18) & 0x1F) / 25	
 				);
 			#endif
 

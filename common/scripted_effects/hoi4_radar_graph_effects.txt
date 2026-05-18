@@ -7,7 +7,7 @@
 calculate_radar_graph_5axis_frame = {
 	for_loop_effect = {
 		start = 0 end = 5 value = v
-		multiply_temp_variable = { axis^v = 24 }
+		multiply_temp_variable = { axis^v = 25 }
 		round_temp_variable = axis^v
 	}
 
@@ -33,12 +33,12 @@ calculate_radar_graph_5axis_frame = {
 calculate_radar_graph_5axis_anim_frame = {
 	for_each_loop = {
 		array = axis_init
-		multiply_temp_variable = { axis_init^i = 24 }
+		multiply_temp_variable = { axis_init^i = 25 }
 		round_temp_variable = axis_init^i
 	}
 	for_each_loop = {
 		array = axis_final
-		multiply_temp_variable = { axis_final^i = 24 }
+		multiply_temp_variable = { axis_final^i = 25 }
 		round_temp_variable = axis_final^i
 	}
 	
