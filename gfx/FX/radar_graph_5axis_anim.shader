@@ -81,43 +81,128 @@ PixelShader =
 
 			float pi = 3.141592654;
 
-			float angles[5] = {
-				2*pi*0/5,
-				2*pi*1/5,
-				2*pi*2/5,
-				2*pi*3/5,
-				2*pi*4/5
-			};
+			#ifdef PDX_DIRECTX_9
+				float angles[5] = {
+					2*pi*0/5,
+					2*pi*1/5,
+					2*pi*2/5,
+					2*pi*3/5,
+					2*pi*4/5
+				};
+			#endif
+			#ifdef PDX_DIRECTX_11
+				float angles[5] = {
+					2*pi*0/5,
+					2*pi*1/5,
+					2*pi*2/5,
+					2*pi*3/5,
+					2*pi*4/5
+				};
+			#endif
+			#ifdef PDX_OPENGL
+				float angles[5] = float[5](
+					2*pi*0/5,
+					2*pi*1/5,
+					2*pi*2/5,
+					2*pi*3/5,
+					2*pi*4/5
+				);
+			#endif
 
 			float vTimeClamped = sin(clamp(1.5*(Time-AnimationTime),0,pi/2));
-			int data = Offset.x + 1;
+			int data = int(Offset.x) + 1;
 
 			int thisSector = (data >> 0) & 0x7;
 
-			float scale_init[2] = {
-				float((data >> 3) & 0x1F) / 24,
-				float((data >> 8) & 0x1F) / 24
-			};
+			#ifdef PDX_DIRECTX_9
+				float scale_init[2] = {
+					float((data >> 3) & 0x1F) / 24,
+					float((data >> 8) & 0x1F) / 24
+				};
+			#endif
+			#ifdef PDX_DIRECTX_11
+				float scale_init[2] = {
+					float((data >> 3) & 0x1F) / 24,
+					float((data >> 8) & 0x1F) / 24
+				};
+			#endif
+			#ifdef PDX_OPENGL
+				float scale_init[2] = float[2](
+					float((data >> 3) & 0x1F) / 24,
+					float((data >> 8) & 0x1F) / 24
+				);
+			#endif
 
-			float scale_final[2] = {
-				float((data >> 13) & 0x1F) / 24,
-				float((data >> 18) & 0x1F) / 24	
-			};
+			#ifdef PDX_DIRECTX_9
+				float scale_final[2] = {
+					float((data >> 13) & 0x1F) / 24,
+					float((data >> 18) & 0x1F) / 24	
+				};
+			#endif
+			#ifdef PDX_DIRECTX_11
+				float scale_final[2] = {
+					float((data >> 13) & 0x1F) / 24,
+					float((data >> 18) & 0x1F) / 24	
+				};
+			#endif
+			#ifdef PDX_OPENGL
+				float scale_final[2] = float[2](
+					float((data >> 13) & 0x1F) / 24,
+					float((data >> 18) & 0x1F) / 24	
+				);
+			#endif
 
 			float2 origin = float2(0.0, 0.0);
-			float2 coords_flat[5] = {
-				float2(sin(angles[0]),cos(angles[0])),
-				float2(sin(angles[1]),cos(angles[1])),
-				float2(sin(angles[2]),cos(angles[2])),
-				float2(sin(angles[3]),cos(angles[3])),
-				float2(sin(angles[4]),cos(angles[4])),
-			};
 
-			float2 thisSectorCoords[3] = {
-				origin,
-				lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
-				lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
-			};
+			#ifdef PDX_DIRECTX_9
+				float2 coords_flat[5] = {
+					float2(sin(angles[0]),cos(angles[0])),
+					float2(sin(angles[1]),cos(angles[1])),
+					float2(sin(angles[2]),cos(angles[2])),
+					float2(sin(angles[3]),cos(angles[3])),
+					float2(sin(angles[4]),cos(angles[4]))
+				};
+			#endif
+			#ifdef PDX_DIRECTX_11
+				float2 coords_flat[5] = {
+					float2(sin(angles[0]),cos(angles[0])),
+					float2(sin(angles[1]),cos(angles[1])),
+					float2(sin(angles[2]),cos(angles[2])),
+					float2(sin(angles[3]),cos(angles[3])),
+					float2(sin(angles[4]),cos(angles[4]))
+				};
+			#endif
+			#ifdef PDX_OPENGL
+				float2 coords_flat[5] = float2[5](
+					float2(sin(angles[0]),cos(angles[0])),
+					float2(sin(angles[1]),cos(angles[1])),
+					float2(sin(angles[2]),cos(angles[2])),
+					float2(sin(angles[3]),cos(angles[3])),
+					float2(sin(angles[4]),cos(angles[4]))
+				);
+			#endif
+
+			#ifdef PDX_DIRECTX_9
+				float2 thisSectorCoords[3] = {
+					origin,
+					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
+					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
+				};
+			#endif
+			#ifdef PDX_DIRECTX_11
+				float2 thisSectorCoords[3] = {
+					origin,
+					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
+					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
+				};
+			#endif
+			#ifdef PDX_OPENGL
+				float2 thisSectorCoords[3] = float2[3](
+					origin,
+					lerp(scale_init[0],scale_final[0],vTimeClamped)*coords_flat[thisSector-1],
+					lerp(scale_init[1],scale_final[1],vTimeClamped)*coords_flat[thisSector%5]
+				);
+			#endif
 
 			// Loops through every boundary line to check if a pixel is inside the polygon
 			// uses bool insidePoly which acts as a counter for how many boundary lines are there to the right of a certain y-level
