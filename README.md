@@ -1,5 +1,7 @@
 # Hoi4-Scars-Radar-Graph
 
+![Demo](https://imgur.com/AO61d0D.gif)
+
 Implements a radar graph chart into Hearts of Iron IV via the use of shaders. I made two versions, a static single element version and an animated sector-specific element that is capable of transitioning smoothly between an initial and a final state.
 ## Non-animated version
 Located in `gfx/FX/radar_graph_5axis.shader`, this version takes in a square sprite and creates the pentagon shape dynamically according to its input. A scripted effect has been setup in `common/scripted_effects/hoi4_radar_graph_core.txt` to process its input, `calculate_radar_graph_5axis_frame`, where the input is a five-element temp array called `axis`, expecting values between 0-1.. It uses bit-packing to encode the data of all 5 axes into a single variable that can be fed to a variable as a `frame` argument in the scripted GUI.
