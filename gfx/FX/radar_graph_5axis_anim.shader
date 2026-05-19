@@ -195,10 +195,7 @@ PixelShader =
 				}
 			}
 
-			if(insidePoly){
-				return FilledColor;
-			}
-			return EmptyColor;
+			return lerp(EmptyColor, FilledColor, int(insidePoly));
 		}
 	]]
 }
