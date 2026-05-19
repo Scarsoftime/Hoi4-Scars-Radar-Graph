@@ -1,0 +1,153 @@
+#=====================================#
+## Implementaion
+#=====================================#
+
+## 5-axis
+# args (temp var): temp_axis_index, temp_change
+add_radar_graph_5axis = {
+	# Set the new values
+	add_to_variable = { axis_current_values^temp_axis_index = temp_change }
+	clamp_variable = { var = axis_current_values^temp_axis_index min = 0 max = 1 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis = axis_current_values^v }
+	}
+	
+	# Call the scripted effect
+	calculate_radar_graph_5axis_frame = yes
+	set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
+}
+
+## 5-axis animated
+# args (temp var): temp_axis_index, temp_change
+add_radar_graph_5axis_anim = {
+	# Set the initial positions with the original values
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_init = axis_anim_current_values^v }
+	}
+
+	# Set the new values
+	add_to_variable = { axis_anim_current_values^temp_axis_index = temp_change }
+	clamp_variable = { var = axis_anim_current_values^temp_axis_index min = 0 max = 1 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_final = axis_anim_current_values^v }
+	}
+	
+	# Call the scripted effect
+	calculate_radar_graph_5axis_anim_frame = yes
+
+	# Set the frame data to the output of the scripted effect
+	clear_array = radar_graph_5axis_anim_frame
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_array = { radar_graph_5axis_anim_frame = sector_frame^v }
+	}
+}
+
+# Demo scripted effects
+
+maximize_radar_graph_5axis = {
+	# Set the new values
+	clear_array = axis_current_values
+	resize_array = { array = axis_current_values size = 5 value = 1 }
+
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis = axis_current_values^v }
+	}
+
+	# Call the scripted effect
+	calculate_radar_graph_5axis_frame = yes
+
+	# Set the frame data to the output of the scripted effect
+	set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
+}
+
+randomize_radar_graph_5axis = {
+	# Set the new values
+	clear_array = axis_current_values
+	resize_array = { axis_current_values = 5 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		set_variable_to_random = { var = axis_current_values^v max = 1 }
+	}
+
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis = axis_current_values^v }
+	}
+
+	# Call the scripted effect
+	calculate_radar_graph_5axis_frame = yes
+
+	# Set the frame data to the output of the scripted effect
+	set_variable = { radar_graph_5axis_frame = radar_graph_5axis_output }
+}
+
+maximize_radar_graph_5axis_anim = {
+	# Set the initial positions with the original values
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_init = axis_anim_current_values^v }
+	}
+
+	# Set the new values
+	clear_array = axis_anim_current_values
+	resize_array = { array = axis_anim_current_values size = 5 value = 1 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_final = axis_anim_current_values^v }
+	}
+
+	# Call the scripted effect
+	calculate_radar_graph_5axis_anim_frame = yes
+
+	# Set the frame data to the output of the scripted effect
+	clear_array = radar_graph_5axis_anim_frame
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_array = { radar_graph_5axis_anim_frame = sector_frame^v }
+	}
+}
+
+randomize_radar_graph_5axis_anim = {
+	# Set the initial positions with the original values
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_init = axis_anim_current_values^v }
+	}
+
+	# Set the new values
+	clear_array = axis_anim_current_values
+	resize_array = { axis_anim_current_values = 5 }
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		set_variable_to_random = { var = axis_anim_current_values^v max = 1 }
+	}
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_temp_array = { axis_final = axis_anim_current_values^v }
+	}
+
+	# Call the scripted effect
+	calculate_radar_graph_5axis_anim_frame = yes
+
+	# Set the frame data to the output of the scripted effect
+	clear_array = radar_graph_5axis_anim_frame
+	for_loop_effect = {
+		start = 0 end = 5 value = v
+		add_to_array = { radar_graph_5axis_anim_frame = sector_frame^v }
+	}
+}
+
+randomize_radar_graph_both = {
+	randomize_radar_graph_5axis = yes
+	randomize_radar_graph_5axis_anim = yes
+}
+
+maximize_radar_graph_both = {
+	maximize_radar_graph_5axis = yes
+	maximize_radar_graph_5axis_anim = yes
+}
