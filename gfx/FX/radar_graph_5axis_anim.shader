@@ -190,9 +190,7 @@ PixelShader =
 
 				// skips check if there is no intersection with a boundary at this y-level
 				// if the current x value is less than the intersection (current pixel is to the left of a boundary line), flip the boolean
-				if ( hasCrossing && x < x_intersection ) {
-					insidePoly = !insidePoly;
-				}
+				insidePoly = insidePoly != (hasCrossing && x < x_intersection);
 			}
 
 			return lerp(EmptyColor, FilledColor, int(insidePoly));
